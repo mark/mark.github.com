@@ -1,0 +1,177 @@
+<html>
+
+  <head>
+      <title>Singapore Test Explorer</title>
+
+      <script src="https://code.jquery.com/jquery-1.11.2.min.js" type="text/javascript"></script>
+      <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js" type="text/javascript"></script>
+
+      <script src="singapore_test.js" type="text/javascript"></script>
+
+      <link href="singapore_test.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-39638290-1', 'auto');
+        ga('send', 'pageview');
+
+      </script>
+  </head>
+
+  <body>
+    <div id="main">
+      <h1>What Day is Cheryl's Birthday?</h1>
+
+      <div id='intro'>
+        <div id='problem'>
+          <img src='problem.jpeg' />
+        </div>
+
+        <p id='intro'>
+          A problem from the Singapore Mathematical Olympiad has been travelling around the internet, since being <a href="https://www.facebook.com/kennethjianwenz/photos/a.173663129479243.1073741827.167504136761809/385751114937109/?type=1">shared on Facebook by Kenneth Kong</a>.  This site provides an easy way to work through the problem, to better understand the correct solution and how to solve the problem.
+        </p>
+
+        <h4>How to Use This Site</h4>
+
+        <p>
+          Click on one of the possible dates for Cheryl's birthday.  Then you can follow the thoughts that Albert and Bernard have as they attempt to solve the problem.  If one of the claims they make does not match up with the date you selected, then that claim will show up in <span id='inred'>red</span>, and you can hover over it to see why it is incorrect.
+        </p>
+
+      </div>
+
+      <hr/>
+
+      <div id='options'>
+        <a name='pickDate' />
+        <h3>Pick a possible day</h3>
+
+        <table id='possible-days'>
+          <tr>
+            <td><button data-day="15" data-month='May'>May 15th</button></td>
+            <td><button data-day="16" data-month='May'>May 16th</button></td>
+            <td><button data-day="19" data-month='May'>May 19th</button></td>
+          </tr>
+
+          <tr>
+            <td><button data-day="17" data-month='June'>June 17th</button></td>
+            <td><button data-day="18" data-month='June'>June 18th</button></td>
+          </tr>
+
+          <tr>
+            <td><button data-day="14" data-month='July'>July 14th</button></td>
+            <td><button data-day="16" data-month='July' id='rightanswer'>July 16th</button></td>
+          </tr>
+
+          <tr>
+            <td><button data-day="14" data-month='August'>August 14th</button></td>
+            <td><button data-day="15" data-month='August'>August 15th</button></td>
+            <td><button data-day="17" data-month='August'>August 17th</button></td>
+          </tr>
+        </table>
+      </div>
+
+      <h3>Follow Albert and Bernard's Discussion</h3>
+
+      <table>
+        <tr>
+          <td id="cToA">
+            <div id='toldA'></div>
+          </td>
+          <td id="cToB">
+            <div id='toldB'></div>
+          </td>
+        </tr>
+      </table>
+
+      <p style="display: none" id='aDays' class='aThink'></p>
+
+      <p id='aDays14' style="display:none" class='aThink aDaysNotKnow'>If Bernard heard 14, then he thinks it is July 14th <i>or</i> August 14th.</p>
+      <p id='aDays15' style="display:none" class='aThink aDaysNotKnow'>If Bernard heard 15, then he thinks it is May 15th <i>or</i> August 15th.</p>
+      <p id='aDays16' style="display:none" class='aThink aDaysNotKnow'>If Bernard heard 16, then he thinks it is May 16th <i>or</i> July 16th.</p>
+      <p id='aDays17' style="display:none" class='aThink aDaysNotKnow'>If Bernard heard 17, then he thinks it is June 17th <i>or</i> August 17th.</p>
+      <p id='aDays18' style="display:none" class='aThink aDaysKnow'>If Bernard heard 18, then he <b>knows</b> it is June 18th.</p>
+      <p id='aDays19' style="display:none" class='aThink aDaysKnow'>If Bernard heard 19, then he <b>knows</b> it is May 19th.</p>
+
+      <p id="statement1" class="aSay"><span id='clause1'>I don't know when Cheryl's birthday is</span>, but <span id='clause2'>I know that Bernard does not know too</span>.</p>
+
+      <p style="display:none" class="bThink" id='bSummary'></p>
+
+      <p style="display:none" id='bMonthsMay' class="bThink bMonthsNotHear" data-reference="clause2">
+        I know Albert didn't hear May, since I might have heard 19, and would know it is May 19th.
+      </p>
+
+      <p style="display:none" id='bMonthsJune' class="bThink bMonthsNotHear" data-reference="clause2">
+        I know Albert didn't hear June, since I might have heard 18, and would know it is June 18th.
+      </p>
+
+      <p style="display:none" id='bMonthsJuly' class="bThink bMonthsHear">If Albert heard July, he thinks it is July 14th <i>or</i> July 16th.</p>
+
+      <p style="display:none" id='bMonthsAugust' class="bThink bMonthsHear">If Albert heard August, he thinks it is August 14th <i>or</i> August 15th <i>or</i> August 17th.</p>
+
+      <p style="display:none" id="bConclusion" class="bThink"></p>
+
+      <p id="statement2" class="bSay"><span id='clause3'>At first I don't know when Cheryl's birthday is</span>, but <span id='clause4'>I know now</span>.</p>
+
+      <p style="display:none" id="aSummary" class="aThink">I know Bernard knows Cheryl's birthday is in July or August</p>
+
+      <p style="display:none" class="aThink aDaysJuly" data-reference="clause4">
+        I know Bernard didn't hear 14, because he wouldn't know if it is July 14th <i>or</i> August 14th.
+      </p>
+
+      <p style="display:none" class="aThink aDaysAugust">If Bernard heard 15, he <b>knows</b> it is August 15th.</p>
+
+      <p style="display:none" class="aThink aDaysJuly">If Bernard heard 16, he <b>knows</b> it is July 16th.</p>
+
+      <p style="display:none" class="aThink aDaysAugust">If Bernard heard 17, he <b>knows</b> it is August 17th.</p>
+
+      <p style="display:none" id="aConclusion" class="aThink"></p>
+
+      <p id="statement3" class="aSay">Then <span id='clause5' data-reference="aConclusion">I also know when Cheryl's birthday is</span>.</p>
+
+      <hr/>
+
+      <div style="display:none" id='conclusion0' class="finalConclusion">
+        <div class='nocorrect'>0/3</div>
+
+        <p>
+          <span class='setdate'></span> makes even Albert's first statement incorrect.  <a href="#pickDate">Pick another date</a> to try again.
+        </p>
+      </div>
+
+      <div style="display:none" id='conclusion1' class="finalConclusion">
+        <div class='nocorrect'>1/3</div>
+
+        <p>
+          <span class='setdate'></span> makes Albert's first statement correct, but then neither Albert nor Bernard can correctly identify Cheryl's birthday from the information that they were given.  <a href="#pickDate">Pick another date</a> to try again.
+        </p>
+      </div>
+
+      <div style="display:none" id='conclusion2' class="finalConclusion">
+        <div class='nocorrect'>2/3</div>
+
+        <p>
+          <span class='setdate'></span> allows Bernard to deduce Cheryl's birthday, but Albert does not have enough information to do so as well.  <a href="#pickDate">Pick another date</a> to try again.
+        </p>
+      </div>
+
+      <div style="display:none" id='conclusion3' class="finalConclusion">
+        <div class='nocorrect solution'>3/3</div>
+
+        <p>
+          <span class='setdate'></span> is the only possible date for Cheryl's birthday that makes all three statements correct.  <a href="#pickDate">Pick another date</a> to see why it is invalid.
+        </p>
+      </div>
+
+      <div id="footer">
+        Copyright 2015 by Mark Josef
+        &mdash; email <a href="mailto:McPhage@gmail.com">mcphage@gmail.com</a>
+        &mdash; github <a href="http://github.com/mark">@mark</a>
+        &mdash; twitter <a href="http://twitter.com/1ofyourmeteors">@1ofyourmeteors</a>
+      </div>
+    </div>
+  </body>
+</html>

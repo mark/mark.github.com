@@ -1,0 +1,40 @@
+["May", 15] — ["May", 16] — ["May", 19],
+
+["June", 17] — ["June", 18]
+
+["July", 14] — ["July", 16]
+
+["August", 14] — ["August", 15] — ["August", 17]
+
+DaysForMonth: { "May" => [15, 16, 19], "June" => [17, 18], "July" => [14, 16], "August" => [14, 15, 17] }
+MonthsForDay: { 14 => ["July", August"], 15 => ["May", "August"], 16 => ["May", July"], 17 => ["June", "August"], 18 => ["June"], 19 => ["May"] }
+
+A knows: month (one of "May", "June", "July", "August")
+B knows: day (one of 14, 15, 16, 17, 18, 19)
+
+Statement 1: by A:
+
+"I don't know when Cheryl's birthday is, but I know that Bernard does not know too."
+
+"I don't know, and B doesn't know either"
+
+I don't know -> There are multiple valid dates
+B doesn't know -> For the dates in the month I know, they exist in multiple months
+
+Statement 2: by B:
+
+"At first I don't know when Cheryl's birthday is, but I know now."
+
+"I didn't know, but now I do"
+
+For the months that it could be (by A's statement), only one matches the day.
+
+Statement 3: by A:
+
+"Then I also know when Cheryl's birthday is."
+
+"I know, too"
+
+For the month that it is, only one day is unambiguous
+
+My statement 1 leads to believe only one possible day
